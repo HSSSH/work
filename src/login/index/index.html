@@ -1,0 +1,184 @@
+<div class="start-index">
+    <div class="home-page" v-if="pageIndex == 1">
+        <div class="middle-part">
+            <img src="@/images/login/elephant.png">
+            <img src="@/images/login/words.png">
+            <div class="input-form">
+                <div>{{state.indexType == 2?'注&nbsp;&nbsp;&nbsp;&nbsp;册':'登&nbsp;&nbsp;&nbsp;&nbsp;录'}}</div>
+                <div class="login-form" v-if="state.indexType == 1">
+                    <div class="input-log">
+                        <img src="@/images/login/iconUser.png"/>
+                        <input type="text" name="username" ref="loginUsername" placeholder="请输入手机号" required/>
+                    </div>
+                    <div class="input-log">
+                        <img src="@/images/login/iconPass.png"/>
+                        <input type="password" name="password" ref="loginPassword" placeholder="请输入密码" required/>
+                    </div>
+                    <div class="input-log check-code">
+                        <img src="@/images/login/iconPass.png"/>
+                        <input type="text" name="checkCode" placeholder="请输入验证码" v-model="check.inputCode" required/>
+                        <RandomCode :randomType="3" @getCode="getCode($event)" class="random-code"></RandomCode>
+                        <i v-if="check.codeError" class="error">验证码错误</i>
+                    </div>
+                    <div class="login-submit">
+                        <el-button type="primary" :loading="loading" id="loginBt1" @click.prevent="submit" :disabled="check.inputCode.toLowerCase() !== check.generateCode" :class="{'noAllow':check.inputCode.toLowerCase() !== check.generateCode}">{{loading?'请稍等':'登录'}}</el-button>
+                    </div>
+                    <i v-if="error" class="error">登录账号或密码错误</i>
+                    <p><a>忘记密码?</a></p>
+                </div>
+                <div class="login-form register" name="registerForm" v-if="state.indexType == 2">
+                    <div class="input-log">
+                        <img src="@/images/login/iconUser.png"/>
+                        <input type="text" v-model="reg.region" name="region" placeholder="请输入校区" required/>
+                        <i v-if="check.schoolError && reg.region==''" class="error">校区不能为空</i>
+                    </div>
+                    <div class="input-log">
+                        <img src="@/images/login/iconUser.png"/>
+                        <input type="text" v-model="reg.name" name="name" placeholder="请输入考生姓名" required/>
+                        <i v-if="check.nameError && reg.name==''" class="error">考生姓名不能为空</i>
+                    </div>
+                    <div class="input-log">
+                        <img src="@/images/login/iconUser.png"/>
+                        <input type="text" v-model="reg.username" name="regName" placeholder="请输入手机号" required/>
+                        <i v-if="check.userAlready" class="error">该号码已使用</i>
+                        <i v-if="check.phoneError && reg.username==''" class="error">手机号不能为空</i>
+                    </div>
+                    <div class="input-log">
+                        <img src="@/images/login/iconPass.png"/>
+                        <input type="password" v-model="reg.password" name="regPass" placeholder="请设置密码(6-16位)" required/>
+                        <i v-if="check.passwordError && reg.password==''" class="error">密码不能为空</i>
+                    </div>
+                    <div class="input-log">
+                        <img src="@/images/login/iconPass.png"/>
+                        <input type="password" v-model="reg.passwordConfirm" name="regPassConfirm" placeholder="确认密码" required/>
+                        <i v-if="check.checkPassWrong" class="error">确认密码不相同</i>
+                    </div>
+                    <div class="login-submit">
+                        <el-button type="primary" :loading="loading" id="regButton" :disabled="(reg.password !== reg.passwordConfirm) || check.userAlready" @click.prevent="registerNew">
+                            {{loading?'请稍等':'注册'}}
+                        </el-button>
+                    </div>
+                    <!--<div class="agree-doc"><input type="checkbox" v-model="reg.agreeReg"/>已阅读并同意<a>《网站注册及用户协议》</a></div>-->
+                </div>
+                <!-- <p>Copyright ©爻象教育 版权所有2019</p> -->
+            </div>
+            <p>@2019-2020 yaoxiangedu.com <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19011669号</a></p>
+        </div>
+    </div>
+    <div class="second-page" v-if="pageIndex == 2">
+        <el-carousel height="100%" direction="vertical" :interval="5000" @change="changeCarousel" ref="carousel">
+            <el-carousel-item>
+                <p>找&nbsp;&nbsp;到&nbsp;&nbsp;真&nbsp;&nbsp;正&nbsp;&nbsp;的&nbsp;&nbsp;方&nbsp;&nbsp;向</p>
+                <p>DETERMINE AND REVIEW</p>
+                <p>爻象能力诊断</p>
+                <button @click="pageIndex = 1;state.indexType = 1">
+                    <p>登录体验</p>
+                    <i></i>
+                    <i></i>
+                </button>
+                <img src="@/images/index/page1Ele1.png">
+                <img src="@/images/index/page1Ele1.png">
+                <img src="@/images/index/page1Ele2.png">
+                <img src="@/images/index/page1Ele2.png">
+                <img src="@/images/index/page1Ele2.png">
+                <img src="@/images/index/page1Ele2.png">
+            </el-carousel-item>
+            <el-carousel-item>
+                    <img src="@/images/index/page2Back1.jpg">
+                    <img src="@/images/index/page2Back2.jpg">
+                    <p>爻&nbsp;象&nbsp;诊&nbsp;断</p>
+                    <ul>
+                        <li>
+                            <img src="@/images/index/page2Ele1.png">
+                            <p>理念</p>
+                            <p>为中国学生提供最全面、最权威的学习问题诊断和学习能力测评服务！</p>
+                        </li>
+                        <li>
+                            <img src="@/images/index/page2Ele2.png">
+                            <p>团队</p>
+                            <p>一支掌握先进诊断测评技术和丰富教学经验的团队！</p>
+                        </li>
+                        <li>
+                            <img src="@/images/index/page2Ele3.png">
+                            <p>价值</p>
+                            <p>将最前沿的诊断测评技术和中国学生的学习情况相结合，精准诊断学生的学科问题，测评学生学习能力等级。</p>
+                        </li>
+                    </ul>
+            </el-carousel-item>
+            <el-carousel-item>
+                <p><img src="@/images/index/page3Ele7.png">大&nbsp;能&nbsp;力&nbsp;全&nbsp;面&nbsp;评&nbsp;价</p>
+                <ul>
+                    <li>
+                        <img src="@/images/index/page3Ele1.png">
+                        <p>计&nbsp;算&nbsp;与&nbsp;操&nbsp;作</p>
+                    </li>
+                    <li>
+                        <img src="@/images/index/page3Ele2.png">
+                        <p>语&nbsp;言&nbsp;理&nbsp;解</p>
+                    </li>
+                    <li>
+                        <img src="@/images/index/page3Ele3.png">
+                        <p>归&nbsp;纳&nbsp;类&nbsp;比</p>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <img src="@/images/index/page3Ele4.png">
+                        <p>转&nbsp;化&nbsp;迁&nbsp;移</p>
+                    </li>
+                    <li>
+                        <img src="@/images/index/page3Ele5.png">
+                        <p>空&nbsp;间&nbsp;想&nbsp;象</p>
+                    </li>
+                    <li>
+                        <img src="@/images/index/page3Ele6.png">
+                        <p>逻&nbsp;辑&nbsp;推&nbsp;理</p>
+                    </li>
+                </ul>
+            </el-carousel-item>
+            <el-carousel-item>
+                <p>诊&nbsp;断&nbsp;案&nbsp;例</p>
+                <ul>
+                    <li>
+                        <img src="@/images/index/page4Ele1.png">
+                    </li>
+                    <li>
+                        <img src="@/images/index/page4Ele2.png">
+                    </li>
+                    <li>
+                        <img src="@/images/index/page4Ele3.png">
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <img src="@/images/index/page4Ele4.png">
+                    </li>
+                    <li>
+                        <img src="@/images/index/page4Ele5.png">
+                    </li>
+                    <li>
+                        <img src="@/images/index/page4Ele6.png">
+                    </li>
+                </ul>
+                <div>
+                    <p>©2019 爻象诊断 版权所有</p>
+                </div>
+            </el-carousel-item>
+        </el-carousel>
+    </div>
+    <div class="top-part">
+        <p>
+            <!-- <label>爻象诊断</label> -->
+            <br/>
+            <!-- <label>DETERMINE AND REVIEW</label> -->
+        </p -->
+        <ul :class="{'black':(pageIndex == 2 && state.carouselIndex != 0) || pageIndex > 2}">
+            <!-- <li @click="pageIndex = 1" :class="{'choose1':pageIndex == 1}">首页</li> -->
+            <!-- <li @click="pageIndex = 2" :class="{'choose':pageIndex == 2}">爻象介绍</li> -->
+            <!-- <li @click="pageIndex = 3" :class="{'choose':pageIndex == 3}">诊断体验</li> -->
+            <!-- <li @click="pageIndex = 4" :class="{'choose':pageIndex == 4}">合作联系</li> -->
+        </ul>
+        <!-- <button :class="{'choose':state.indexType == 2}" @click="state.indexType = 2" v-if="pageIndex == 1">注册</button> -->
+        <!-- <button :class="{'choose':state.indexType == 1}" @click="state.indexType = 1" v-if="pageIndex == 1">登录</button> -->
+    </div>
+</div>
