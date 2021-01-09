@@ -4,7 +4,6 @@
   display: flex;
 }
 .left-menu{
-  height: 100%;
   width: 60px;
   background-image: linear-gradient(185deg,#536080,#2e374d);
   text-align: center;
@@ -43,6 +42,9 @@
     }
   }
 }
+.right-content{
+  width: calc(100% - 60px);
+}
 </style>
 <template>
 <div class="main-page">
@@ -58,7 +60,7 @@
       </li>
     </ul>
   </div>
-  <router-view></router-view>
+  <router-view class="right-content"></router-view>
 </div>
 </template>
 
