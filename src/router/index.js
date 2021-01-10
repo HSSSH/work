@@ -7,6 +7,7 @@ const App = () => import(/* webpackChunkName: "group-app"*/'@/App');
 const NotFound = () => import(/* webpackChunkName: "group-app"*/'@/NotFound');
 
 const MainPage = () => import(/* webpackChunkName: "group-mainPage"*/'@/components/MainPage');
+const Todo = () => import(/* webpackChunkName: "group-mainPage"*/'@/components/MainPage/Todo');
 const Task = () => import(/* webpackChunkName: "group-mainPage"*/'@/components/MainPage/Task');
 const Department = () => import(/* webpackChunkName: "group-mainPage"*/'@/components/MainPage/Department');
 
@@ -39,6 +40,10 @@ export default new Router({
             component: MainPage,
             redirect: { name: 'Task' },
             children: [{
+                path: 'todo',
+                name: 'Todo',
+                component: Todo
+            }, {
                 path: 'task',
                 name: 'Task',
                 component: Task

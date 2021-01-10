@@ -72,6 +72,10 @@ export default {
   data () {
     return {
       list:[{
+        name: '待办',
+        src: require('@/images/icon/todo.png'),
+        link: '/app/mainPage/todo'
+      },{
         name: '任务',
         src: require('@/images/icon/task.png'),
         link: '/app/mainPage/task'
